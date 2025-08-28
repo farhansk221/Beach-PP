@@ -47,6 +47,11 @@ mongoose.connection.on('connected', async () => {
     }
 });
 
+// in server/index.js, before app.listen
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok' });
+  });
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
