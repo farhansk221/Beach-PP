@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigin = process.env.FRONTEND_ORIGIN || '*';
-app.use(cors({ origin: allowedOrigin }));
+app.use(cors());
 
 
 app.use('/api', signup);
