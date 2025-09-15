@@ -25,16 +25,13 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-// Drop legacy unique index on lastname if it exists
 mongoose.connection.on('connected', async () => {
     try {
         await mongoose.connection.db.collection('users').dropIndex('lastname_1');
         console.log('Dropped legacy index lastname_1');
     } catch (err) {
         if (err && (err.codeName === 'IndexNotFound' || err.message.includes('index not found'))) {
-            // ignore if index does not exist
         } else if (err && err.message && err.message.includes('ns not found')) {
-            // collection may not exist yet; ignore
         } else {
             console.warn('Index drop check:', err.message || err);
         }
@@ -47,7 +44,6 @@ mongoose.connection.on('connected', async () => {
     }
 });
 
-// in server/index.js, before app.listen
 app.get('/api/health', (req, res) => {
     res.json({ status: 'ok' });
   });
